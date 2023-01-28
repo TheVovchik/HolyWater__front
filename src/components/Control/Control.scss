@@ -1,0 +1,13 @@
+.control {
+  display: flex;
+  justify-content: space-between;
+
+  &__data {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon-wrapper {
+    border: 1px solid lightgray;
+  }
+}

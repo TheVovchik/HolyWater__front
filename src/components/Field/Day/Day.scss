@@ -1,0 +1,23 @@
+.day {
+  padding: 8px;
+  border: 1px solid grey;
+  overflow: hidden;
+
+  &--status-passive {
+    opacity: 0.5;
+  }
+
+  &--status-active {
+    background-color: rgba(245, 243, 113, 0.589);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__events {
+    height: calc(100% - 24px);
+    overflow-y: auto;
+  }
+}

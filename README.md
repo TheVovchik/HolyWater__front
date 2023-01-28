@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# SPA "YOUR PERSONAL CALENDAR"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[DEMO-LINK](https://thevovchik.github.io/HolyWater__front)
 
-## Available Scripts
+> To start project
+- `Fork` the repository
+- `Clone` the forked repo
+- Run `npm install` to install the dependencies
+- Run `npm start` to run a development server at http://localhost:3000 (If you need to stop the server press `ctrl + c` in the terminal window)
 
-In the project directory, you can run:
+> To develop changes in project
+- `Fork` the repository
+- `Clone` the forked repo
+- Run `npm install` to install the dependencies
+- Create a branch for you solution (e.g. `git checkout -b develop`)
+- Run `npm start` to run a development server at http://localhost:3000 (If you need to stop the server press `ctrl + c` in the terminal window)
+- Write the code inside the `src/` folder
+- `add`, `commit` and `push` all the recent changes
+- Put your `Github username` to `homepage` (`https://<username>.github.io/HolyWater__front`) in `package.json`
+- Run `npm run deploy` to publish your solution to `Github pages`
+- Create a `Pull Request` (`PR`) from `the-forked-repo/develop` to `the-original-repo/master`
 
-### `npm start`
+# API DATA
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[API DOCS](https://dzen-task.onrender.com/v1/static)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+DataBase: ```MySQL (PlanetScale.com)```
 
-### `npm test`
+Server: ```render.com``` (need ~2 minutes to wake up if have no action on last 30 minutes)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# APP FUNCTIONALITY
 
-### `npm run build`
+> Auth form
+- Email - custom validation (!required)
+- Password - at list 4 symbols (!required)
+- Login - button used to sent validation request and check user input (if user email exist, if password is correct)
+- Register - button used to register new user (return an error if user with such email already exist)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> Calendar
+- Blue round plus button.
+  * to close/open new event popup with form
+- Data filter with arrows.
+  * to navigate through years with step of 1 month.
+- Date button.
+  * to open/close date select popup.
+- Log out button
+  * to leave current calendar session.
+- calendar grid of selected month (by default current). 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> Form popup
+- card name ```Add new idea item``` if opened with create button and ```Edit idea item``` if open by click on event to update it.
+- close button ```x```.
+- created at (if wasn't update before) / updated at for updated modal.
+- title input field (!required).
+- description (optional).
+- date / time selection section:
+  * date field (!required).
+  * begin time optional.
+- confirm/submit button appears when required fields are filed.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> Date popup
+- month drop down selector.
+- year drop down selector (+/- 10 years range from current).
+- confirm button appears if both are selected.
 
-### `npm run eject`
+> Calendar Cell
+- day number in top left corner.
+- day name in top right corner.
+- events list sorted by start time. No start time are always on top. List is scrollable.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# MIGRATION
+- DataStorage class corresponds for the structure of methods that can be used with storage.
+- APIStorage extends and implement DataStorage methods using RESTapi as place to store data.
+- LSStorage extends and implement DataStorage methods using LocalStorage as place to store data;
+- Storage methods and places can be simply extended.
