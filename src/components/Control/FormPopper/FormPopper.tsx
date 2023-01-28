@@ -17,11 +17,11 @@ import { dataStorage } from '../../../Storage/Storage';
 
 type Props = {
   closePopper: () => void,
-  loadEvents: () => void,
+  triggerUpdate: () => void,
 };
 
 export const FormPopper: FC<Props> = ({
-  closePopper, loadEvents,
+  closePopper, triggerUpdate,
 }) => {
   const { oneEvent } = useAppSelector(store => store.oneEvent);
   const [title, setTitle] = useState('');
@@ -63,7 +63,7 @@ export const FormPopper: FC<Props> = ({
     setText(e.target.value);
   };
 
-  const handleCreateEvent = () => {
+  const handleCreateEvent = async () => {
     const [day, year, month] = parseDate(date);
     const userId = user ? user.id : 0;
 
@@ -77,12 +77,13 @@ export const FormPopper: FC<Props> = ({
       time,
     };
 
-    dataStorage.createNewEvent(event);
+    await dataStorage.createNewEvent(event);
     closePopper();
-    loadEvents();
+
+    triggerUpdate();
   };
 
-  const handleUpdateEvent = () => {
+  const handleUpdateEvent = async () => {
     const [day, year, month] = parseDate(date);
 
     const event: NewEvent = {
@@ -95,9 +96,9 @@ export const FormPopper: FC<Props> = ({
     };
 
     if (oneEvent) {
-      dataStorage.updateCurrentEvent(event, oneEvent.id);
+      await dataStorage.updateCurrentEvent(event, oneEvent.id);
       closePopper();
-      loadEvents();
+      triggerUpdate();
     }
   };
 

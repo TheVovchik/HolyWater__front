@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { User } from '../../types/User';
 
-const BASE_URL = 'http://localhost:5000/users';
+const BASE_URL = 'https://holy-water.onrender.com/users';
 
 export const verifyUser = async (
   email: string, password: string,

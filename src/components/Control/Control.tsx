@@ -22,10 +22,10 @@ import { FormPopper } from './FormPopper';
 import { AuthContext } from '../Auth/AuthContext';
 
 type Props = {
-  loadEvents: () => void,
+  triggerUpdate: () => void,
 };
 
-export const Control: FC<Props> = ({ loadEvents }) => {
+export const Control: FC<Props> = ({ triggerUpdate }) => {
   const [anchData, setAnchData] = useState<HTMLButtonElement | null>(null);
   const [openData, setOpenData] = useState(false);
   const [dataPlace, setDataPlace] = useState<PopperPlacementType>();
@@ -116,7 +116,7 @@ export const Control: FC<Props> = ({ loadEvents }) => {
               >
                 <FormPopper
                   closePopper={closeFormPopper}
-                  loadEvents={loadEvents}
+                  triggerUpdate={triggerUpdate}
                 />
               </Paper>
             </Fade>

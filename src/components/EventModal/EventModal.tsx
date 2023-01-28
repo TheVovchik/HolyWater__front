@@ -8,10 +8,10 @@ import * as oneEventActions from '../../features/oneEvent';
 import './EventModal.scss';
 
 type Props = {
-  loadEvents: () => void,
+  triggerUpdate: () => void,
 };
 
-export const EventModal: FC<Props> = ({ loadEvents }) => {
+export const EventModal: FC<Props> = ({ triggerUpdate }) => {
   const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { oneEvent } = useAppSelector(store => store.oneEvent);
@@ -39,8 +39,8 @@ export const EventModal: FC<Props> = ({ loadEvents }) => {
       <div className="modal-card event-modal__card">
         <section className="modal-card-body event-modal__body">
           <FormPopper
-            loadEvents={loadEvents}
             closePopper={closeModal}
+            triggerUpdate={triggerUpdate}
           />
         </section>
       </div>

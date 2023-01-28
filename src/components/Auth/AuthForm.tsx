@@ -98,7 +98,7 @@ export const AuthForm: React.FC<Props> = ({
 
   return (
     <div className="auth-wrapper">
-      <form onSubmit={handleSubmit} className="box mt-5">
+      <form onSubmit={handleSubmit} className="box">
         <h1 className="title is-3">
           Welcome to
           {' '}

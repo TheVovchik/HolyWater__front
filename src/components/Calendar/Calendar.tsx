@@ -1,4 +1,7 @@
-import { FC, useContext, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  FC, useContext, useEffect,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { Control } from '../Control';
 import { Field } from '../Field';
@@ -8,6 +11,7 @@ import * as eventsActions from '../../features/events';
 import './Calendar.scss';
 import { useAppSelector } from '../../store/hooks';
 import { EventModal } from '../EventModal';
+import { Loader } from '../Loader';
 
 export const Calendar: FC = () => {
   const { user } = useContext(AuthContext);
@@ -16,6 +20,12 @@ export const Calendar: FC = () => {
     userMonth,
     userYear,
   } = useAppSelector(store => store.date);
+
+  const {
+    loading,
+  } = useAppSelector(store => store.events);
+
+  const { oneEvent } = useAppSelector(store => store.oneEvent);
 
   const loadEvents = () => {
     if (user) {
@@ -35,11 +45,12 @@ export const Calendar: FC = () => {
 
   return (
     <div className="calendar">
-      <Control loadEvents={loadEvents} />
+      <Control triggerUpdate={loadEvents} />
 
-      <Field />
+      {loading && <Loader />}
+      {!loading && <Field />}
 
-      <EventModal loadEvents={loadEvents} />
+      {oneEvent && <EventModal triggerUpdate={loadEvents} />}
     </div>
   );
 };

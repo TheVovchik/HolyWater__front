@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UserEvent, NewEvent } from '../../types/UserEvent';
 
-const BASE_URL = 'http://localhost:5000/events';
+const BASE_URL = 'https://holy-water.onrender.com/events';
 
 export const createEvent = async (event: NewEvent) => {
   return axios.post<UserEvent>(BASE_URL, event)

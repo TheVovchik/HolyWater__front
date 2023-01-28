@@ -5,8 +5,12 @@
 }
 
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   font-family: 'Unbounded', cursive;
+  min-height: 100vh;
 }
 
 .auth-wrapper {
