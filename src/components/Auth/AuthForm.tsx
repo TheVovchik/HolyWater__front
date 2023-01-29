@@ -48,8 +48,10 @@ export const AuthForm: React.FC<Props> = ({
   const registerUser = async () => {
     const isEmailValid = EmailPattern.test(email);
 
-    if (!isEmailValid) {
-      setEmailError('email not valid');
+    if (!isEmailValid || password.length < 4) {
+      if (!isEmailValid) {
+        setEmailError('email not valid');
+      }
 
       if (password.length < 4) {
         setPasswordError('password must contain at least 4 symbols');

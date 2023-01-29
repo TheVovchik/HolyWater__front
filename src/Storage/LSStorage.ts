@@ -3,7 +3,12 @@ import { User } from '../types/User';
 import { NewEvent, UserEvent } from '../types/UserEvent';
 import { DataStorage } from './DataStorage';
 import {
-  createEvent, createUser, getAllEventsFromLS, updateEvent, verifyUser,
+  createEvent,
+  createUser,
+  deleteEvent,
+  getAllEventsFromLS,
+  updateEvent,
+  verifyUser,
 } from './LSStorage.functions';
 
 export class LSStorage extends DataStorage {
@@ -33,5 +38,9 @@ export class LSStorage extends DataStorage {
     year: number, month: number, userId: number,
   ): Promise<UserEvent[]> {
     return getAllEventsFromLS(year, month, userId);
+  }
+
+  destroyEvent(eventId: number): Promise<string> {
+    return deleteEvent(eventId);
   }
 }

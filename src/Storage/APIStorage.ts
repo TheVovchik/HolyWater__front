@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import {
-  createEvent, getEventsFromApi, updateEvent,
+  createEvent, deleteEvent, getEventsFromApi, updateEvent,
 } from '../components/api/event';
 import { createUser, verifyUser } from '../components/api/user';
 import { User } from '../types/User';
@@ -34,5 +34,9 @@ export class APIStorage extends DataStorage {
     year: number, month: number, userId: number,
   ): Promise<UserEvent[]> {
     return getEventsFromApi(year, month, userId);
+  }
+
+  destroyEvent(eventId: number): Promise<string> {
+    return deleteEvent(eventId);
   }
 }

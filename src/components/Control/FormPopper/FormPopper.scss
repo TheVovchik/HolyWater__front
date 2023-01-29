@@ -1,13 +1,17 @@
+@import '../../../styles/vars';
+
 .formpopper {
+  height: 100vh;
   padding: 10px;
   display: flex;
   flex-direction: column;
   text-align: left;
+  justify-content: space-between;
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 6px;
   }
 
   &__header {
@@ -17,7 +21,7 @@
   }
 
   &__label {
-    position: relative;
+    position: absolute;
     top: 6px;
     left: 0;
     z-index: 2;
@@ -25,7 +29,6 @@
 
     font-size: 8px;
     line-height: 14px;
-    color: blue;
 
     animation-name: appear;
     animation-duration: 0.3s;
@@ -48,18 +51,31 @@
     }
   }
 
+  &__textarea-wrapper {
+    position: relative;
+  }
+
   &__textarea {
     width: 300px;
     border: none;
     border-bottom: 1px solid grey;
     padding: 0;
-    box-shadow: none;
     border-radius: none;
+    box-shadow: none;
     font-family: 'Unbounded', cursive;
     font-size: 12px !important;
+    transition: box-shadow 0.6s ease-in-out;
 
     &::placeholder {
       font-size: 10px;
+    }
+
+    &:focus {
+      box-shadow: 0px 1px 1px $mainDark;
+    }
+
+    &--mt-14 {
+      margin-top: 20px;
     }
   }
 
@@ -71,6 +87,15 @@
     font-size: 12px;
     margin-bottom: 8px;
   }
+
+  &__submit {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+
+    border-top: 1px solid $neutral;
+    padding: 12px 0;
+  }
 }
 
 .datepick {
@@ -80,4 +105,8 @@
     display: flex;
     flex-direction: column;
   }
+}
+
+.textarea:focus ~ .formpopper__label {
+  color: $mainDark;
 }

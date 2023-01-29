@@ -21,3 +21,10 @@ export const updateEvent = async (
   return axios.patch<UserEvent>(`${BASE_URL}?eventId=${eventId}`, event)
     .then(response => response.data);
 };
+
+export const deleteEvent = async (
+  eventId: number,
+) => {
+  return axios.delete<string>(`${BASE_URL}?eventId=${eventId}`)
+    .then(response => response.data);
+};

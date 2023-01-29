@@ -112,10 +112,10 @@ export const Control: FC<Props> = ({ triggerUpdate }) => {
         <Drawer
           open={state}
           onClose={toggleDrawer(false)}
-          sx={{ width: 320, height: 'fit-content' }}
+          sx={{ width: 320 }}
         >
           <Box
-            sx={{ width: 320, height: 'fit-content' }}
+            sx={{ width: 320 }}
             role="presentation"
           >
             <FormPopper

@@ -19,4 +19,8 @@ export abstract class DataStorage {
   abstract getAllEvents(
     year: number, month: number, userId: number,
   ): Promise<UserEvent[]>;
+
+  abstract destroyEvent(
+    eventId: number,
+  ): Promise<string>;
 }

@@ -2,12 +2,16 @@ import React, {
   FC, useContext, useState, useEffect, useMemo,
 } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
 import { TextField } from '@mui/material';
 import './FormPopper.scss';
 import DatePicker from 'react-datepicker';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import DeleteIcon from '@mui/icons-material/Delete';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ThemeProvider } from '@mui/material/styles';
+import classNames from 'classnames';
 import { theme } from '../../../styles/textInput';
 import { AuthContext } from '../../Auth/AuthContext';
 import { NewEvent } from '../../../types/UserEvent';
@@ -28,6 +32,8 @@ export const FormPopper: FC<Props> = ({
   const [text, setText] = useState('');
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [error, setError] = useState('');
   const { user } = useContext(AuthContext);
 
   const canSubmit = useMemo(() => {
@@ -64,6 +70,7 @@ export const FormPopper: FC<Props> = ({
   };
 
   const handleCreateEvent = async () => {
+    setIsDisabled(true);
     const [day, year, month] = parseDate(date);
     const userId = user ? user.id : 0;
 
@@ -77,13 +84,19 @@ export const FormPopper: FC<Props> = ({
       time,
     };
 
-    await dataStorage.createNewEvent(event);
-    closePopper(false);
+    try {
+      await dataStorage.createNewEvent(event);
+      closePopper(false);
+      triggerUpdate();
+    } catch (_error) {
+      setError('Something went wrong');
+    }
 
-    triggerUpdate();
+    setIsDisabled(false);
   };
 
   const handleUpdateEvent = async () => {
+    setIsDisabled(true);
     const [day, year, month] = parseDate(date);
 
     const event: NewEvent = {
@@ -95,11 +108,33 @@ export const FormPopper: FC<Props> = ({
       time,
     };
 
-    if (oneEvent) {
-      await dataStorage.updateCurrentEvent(event, oneEvent.id);
-      closePopper(false);
-      triggerUpdate();
+    try {
+      if (oneEvent) {
+        await dataStorage.updateCurrentEvent(event, oneEvent.id);
+        closePopper(false);
+        triggerUpdate();
+      }
+    } catch (_error) {
+      setError('Something went wrong');
     }
+
+    setIsDisabled(false);
+  };
+
+  const handleEventDelete = async () => {
+    setIsDisabled(true);
+
+    try {
+      if (oneEvent) {
+        await dataStorage.destroyEvent(oneEvent.id);
+        closePopper(false);
+        triggerUpdate();
+      }
+    } catch (_error) {
+      setError('Something went wrong');
+    }
+
+    setIsDisabled(false);
   };
 
   useEffect(() => {
@@ -117,28 +152,32 @@ export const FormPopper: FC<Props> = ({
 
   return (
     <div className="formpopper">
-      <div className="formpopper__header">
-        <h3 className="formpopper__title">
-          {oneEvent ? 'Edit idea item' : 'Add new idea item'}
-        </h3>
-        <CloseIcon
-          sx={{
-            cursor: 'pointer',
-          }}
-          onClick={() => closePopper(false)}
-        />
-      </div>
-
-      {oneEvent && (
-        <p className="formpopper__updated-at">
-          {oneEvent.createdAt === oneEvent.updatedAt
-            ? 'Created at: '
-            : 'Updated at: '}
-          {new Date(oneEvent.updatedAt).toLocaleString('en-US')}
-        </p>
-      )}
-
       <form className="formpopper__form">
+        <div className="formpopper__header">
+          <h3 className="formpopper__title">
+            {oneEvent ? 'Edit idea item' : 'Add new idea item'}
+          </h3>
+          <CloseIcon
+            sx={{
+              cursor: 'pointer',
+            }}
+            onClick={() => closePopper(false)}
+          />
+        </div>
+
+        {error && (
+          <p className="help is-danger">{error}</p>
+        )}
+
+        {oneEvent && (
+          <p className="formpopper__updated-at">
+            {oneEvent.createdAt === oneEvent.updatedAt
+              ? 'Created at: '
+              : 'Updated at: '}
+            {new Date(oneEvent.updatedAt).toLocaleString('en-US')}
+          </p>
+        )}
+
         <ThemeProvider theme={theme}>
           <TextField
             label="Title"
@@ -151,21 +190,26 @@ export const FormPopper: FC<Props> = ({
           />
         </ThemeProvider>
 
-        {text && (
-          <label
-            className="formpopper__label"
-            htmlFor="description"
-          >
-            Description
-          </label>
-        )}
-        <textarea
-          id="description"
-          className="textarea formpopper__textarea"
-          placeholder="Description"
-          value={text}
-          onChange={handleTextInput}
-        />
+        <div className="formpopper__textarea-wrapper">
+          <textarea
+            id="description"
+            className={classNames(
+              'textarea formpopper__textarea',
+              { 'formpopper__textarea--mt-14': text },
+            )}
+            placeholder="Description"
+            value={text}
+            onChange={handleTextInput}
+          />
+          {text && (
+            <label
+              className="formpopper__label"
+              htmlFor="description"
+            >
+              Description
+            </label>
+          )}
+        </div>
 
         <div className="formpopper__datepick datepick">
           <div className="datepick__date">
@@ -193,22 +237,31 @@ export const FormPopper: FC<Props> = ({
             />
           </div>
         </div>
-
-        {canSubmit
-          && (
-            <DoneAllIcon
-              sx={{
-                cursor: 'pointer',
-                color: 'blue',
-                '&:hover': {
-                  transform: 'scale(1.1)',
-                },
-                alignSelf: 'center',
-              }}
-              onClick={oneEvent ? handleUpdateEvent : handleCreateEvent}
-            />
-          )}
       </form>
+
+      <div className="formpopper__submit">
+        {oneEvent && (
+          <IconButton
+            aria-label="delete"
+            color="error"
+            onClick={handleEventDelete}
+            disabled={isDisabled}
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
+
+        <Button
+          type="submit"
+          variant="contained"
+          endIcon={<SendIcon />}
+          disabled={!canSubmit || isDisabled}
+          onClick={oneEvent ? handleUpdateEvent : handleCreateEvent}
+          sx={{ width: '80px' }}
+        >
+          Send
+        </Button>
+      </div>
     </div>
   );
 };

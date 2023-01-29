@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { User } from '../types/User';
 import { NewEvent, UserEvent } from '../types/UserEvent';
 import { getData, setData } from '../utils/useStorage';
@@ -7,8 +6,6 @@ import { getData, setData } from '../utils/useStorage';
 
 async function getOne(email: string) {
   const users = getData('users');
-
-  console.log(users);
 
   if (users) {
     const user = await users.find(
@@ -142,8 +139,6 @@ export async function getAllEventsFromLS(
         event.year === year && event.month === month && event.userId === userId
       )) ?? [];
 
-    console.log(events);
-
     return filtredIvents;
   }
 
@@ -198,6 +193,31 @@ export async function updateEvent(
   }
 
   return updatedEvent;
+}
+
+function deleteUserEvent(eventId: number) {
+  const events: UserEvent[] = getData('events');
+  const filtredEvents = events.filter(event => event.id !== eventId) ?? null;
+
+  if (filtredEvents) {
+    setData('events', filtredEvents);
+
+    return 1;
+  }
+
+  localStorage.removeItem('events');
+
+  return 1;
+}
+
+export async function deleteEvent(eventId: number) {
+  const result = await deleteUserEvent(eventId);
+
+  if (!result) {
+    return 'something went wrong';
+  }
+
+  return 'success';
 }
 
 // #endregion
