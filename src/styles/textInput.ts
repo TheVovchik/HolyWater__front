@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 export const theme = createTheme({
   typography: {
     allVariants: {
-      fontSize: '10px',
+      fontSize: '12px',
       fontFamily: '\'Unbounded\', cursive',
     },
   },

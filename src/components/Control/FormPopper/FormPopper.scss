@@ -7,7 +7,7 @@
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
   }
 
   &__header {
@@ -56,7 +56,7 @@
     box-shadow: none;
     border-radius: none;
     font-family: 'Unbounded', cursive;
-    font-size: 10px !important;
+    font-size: 12px !important;
 
     &::placeholder {
       font-size: 10px;
