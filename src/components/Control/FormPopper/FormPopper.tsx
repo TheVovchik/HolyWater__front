@@ -174,7 +174,9 @@ export const FormPopper: FC<Props> = ({
             {oneEvent.createdAt === oneEvent.updatedAt
               ? 'Created at: '
               : 'Updated at: '}
-            {new Date(oneEvent.updatedAt).toLocaleString('en-US')}
+            {new Intl.DateTimeFormat('default',
+              { dateStyle: 'medium', timeStyle: 'medium', hour12: false })
+              .format(new Date(oneEvent.updatedAt))}
           </p>
         )}
 

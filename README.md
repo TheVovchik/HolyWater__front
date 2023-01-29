@@ -22,11 +22,11 @@
 
 # API DATA
 
-[API DOCS](https://dzen-task.onrender.com/v1/static)
+[API DOCS](https://holy-water.onrender.com/swagger)
 
 DataBase: ```MySQL (PlanetScale.com)```
 
-Server: ```render.com``` (need ~2 minutes to wake up if have no action on last 30 minutes)
+Server: ```render.com``` (need ~1 minutes to wake up if have no action on last 30 minutes)
 
 # APP FUNCTIONALITY
 
@@ -47,7 +47,7 @@ Server: ```render.com``` (need ~2 minutes to wake up if have no action on last 3
   * to leave current calendar session.
 - calendar grid of selected month (by default current). 
 
-> Form popup
+> Form
 - card name ```Add new idea item``` if opened with create button and ```Edit idea item``` if open by click on event to update it.
 - close button ```x```.
 - created at (if wasn't update before) / updated at for updated modal.
@@ -56,7 +56,7 @@ Server: ```render.com``` (need ~2 minutes to wake up if have no action on last 3
 - date / time selection section:
   * date field (!required).
   * begin time optional.
-- confirm/submit button appears when required fields are filed.
+- delete buttom (when existed event was opened) and confirm/submit button become active when required fields are filed.
 
 > Date popup
 - month drop down selector.

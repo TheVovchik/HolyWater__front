@@ -50,14 +50,16 @@ export const DatePopper: FC<Props> = ({ closePopper }) => {
         }}
         onClick={closePopper}
       />
+
       <div className="datepopper__selector selector">
-        <FormControl sx={{ m: 1, minWidth: 180 }} className="selector__month">
+        <FormControl sx={{ m: 1 }} className="selector__month">
           <InputLabel id="demo-simple-select-label">Month</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={month}
             label="Month"
+            sx={{ width: 140 }}
             onChange={selectMonth}
           >
             {months.map(current => {
@@ -73,7 +75,7 @@ export const DatePopper: FC<Props> = ({ closePopper }) => {
           </Select>
         </FormControl>
 
-        <FormControl sx={{ m: 1, minWidth: 140 }} className="selector__year">
+        <FormControl sx={{ m: 1 }} className="selector__year">
           <InputLabel
             id="demo-simple-select-label"
           >
@@ -84,7 +86,7 @@ export const DatePopper: FC<Props> = ({ closePopper }) => {
             id="demo-simple-select"
             value={year}
             label="Year"
-            sx={{ width: 140 }}
+            sx={{ width: 100 }}
             onChange={selectYear}
           >
             {yearsList.map(current => {
