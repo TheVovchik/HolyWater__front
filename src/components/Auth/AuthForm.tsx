@@ -45,6 +45,12 @@ export const AuthForm: React.FC<Props> = ({
   };
 
   const registerUser = async () => {
+    if (password.length < 4) {
+      setPasswordError('password must contain at least 4 symbols');
+
+      return;
+    }
+
     try {
       const user = await dataStorage.createNewUser(email, password);
 
