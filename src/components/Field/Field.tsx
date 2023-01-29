@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppSelector } from '../../store/hooks';
 import { generateMonth } from '../../utils/generateMonth';
 import './Field.scss';
 import { Day } from './Day';
 
-export const Field: FC = () => {
+export const Field: FC = memo(() => {
   const {
     currentMonth,
     currentYear,
@@ -29,4 +29,4 @@ export const Field: FC = () => {
       })}
     </div>
   );
-};
+});

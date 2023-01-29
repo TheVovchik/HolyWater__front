@@ -1,6 +1,8 @@
+@import '../../../styles/vars';
+
 .day {
   padding: 8px;
-  border: 1px solid grey;
+  border: 1px solid $neutral;
   overflow: hidden;
 
   &--status-passive {
@@ -8,12 +10,18 @@
   }
 
   &--status-active {
-    background-color: rgba(245, 243, 113, 0.589);
+    background-color: $mainLight;
   }
 
   &__header {
     display: flex;
     justify-content: space-between;
+
+    color: $neutral;
+
+    &--status-active {
+      color: #fff;
+    }
   }
 
   &__events {

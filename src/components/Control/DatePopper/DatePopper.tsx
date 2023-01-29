@@ -1,8 +1,10 @@
-import React, { FC, useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import { FC, useState } from 'react';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import CloseIcon from '@mui/icons-material/Close';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import './DatePopper.scss';
 import { useDispatch } from 'react-redux';
 import { months } from '../../../utils/generateMonth';
@@ -24,22 +26,12 @@ export const DatePopper: FC<Props> = ({ closePopper }) => {
   const [year, setYear] = useState('');
 
   const yearsList = generateYears(currentYear);
-  const selectYear = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: string | null,
-  ) => {
-    if (value) {
-      setYear(value);
-    }
+  const selectYear = (event: SelectChangeEvent) => {
+    setYear(event.target.value as string);
   };
 
-  const selectMonth = (
-    event: React.SyntheticEvent<Element, Event>,
-    value: string | null,
-  ) => {
-    if (value) {
-      setMonth(value);
-    }
+  const selectMonth = (event: SelectChangeEvent) => {
+    setMonth(event.target.value as string);
   };
 
   const isSelected = month && year;
@@ -59,41 +51,54 @@ export const DatePopper: FC<Props> = ({ closePopper }) => {
         onClick={closePopper}
       />
       <div className="datepopper__selector selector">
-        <div className="selector__month">
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={months}
+        <FormControl sx={{ m: 1, minWidth: 180 }} className="selector__month">
+          <InputLabel id="demo-simple-select-label">Month</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
             value={month}
-            clearOnEscape
-            onChange={(
-              event: React.SyntheticEvent<Element, Event>,
-              value: string | null,
-            ) => (
-              selectMonth(event, value)
-            )}
-            sx={{ width: 180 }}
-            renderInput={(params) => <TextField {...params} label="Month" />}
-          />
-        </div>
+            label="Month"
+            onChange={selectMonth}
+          >
+            {months.map(current => {
+              return (
+                <MenuItem
+                  value={current}
+                  key={current}
+                >
+                  {current}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
 
-        <div className="selector__year">
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={yearsList}
+        <FormControl sx={{ m: 1, minWidth: 140 }} className="selector__year">
+          <InputLabel
+            id="demo-simple-select-label"
+          >
+            Year
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
             value={year}
-            clearOnEscape
-            onChange={(
-              event: React.SyntheticEvent<Element, Event>,
-              value: string | null,
-            ) => (
-              selectYear(event, value)
-            )}
+            label="Year"
             sx={{ width: 140 }}
-            renderInput={(params) => <TextField {...params} label="Year" />}
-          />
-        </div>
+            onChange={selectYear}
+          >
+            {yearsList.map(current => {
+              return (
+                <MenuItem
+                  value={current}
+                  key={current}
+                >
+                  {current}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       </div>
 
       {isSelected

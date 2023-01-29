@@ -1,4 +1,5 @@
 .formpopper {
+  padding: 10px;
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -48,6 +49,7 @@
   }
 
   &__textarea {
+    width: 300px;
     border: none;
     border-bottom: 1px solid grey;
     padding: 0;

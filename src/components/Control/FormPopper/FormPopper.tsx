@@ -16,7 +16,7 @@ import { useAppSelector } from '../../../store/hooks';
 import { dataStorage } from '../../../Storage/Storage';
 
 type Props = {
-  closePopper: () => void,
+  closePopper: (status: boolean) => void,
   triggerUpdate: () => void,
 };
 
@@ -78,7 +78,7 @@ export const FormPopper: FC<Props> = ({
     };
 
     await dataStorage.createNewEvent(event);
-    closePopper();
+    closePopper(false);
 
     triggerUpdate();
   };
@@ -97,7 +97,7 @@ export const FormPopper: FC<Props> = ({
 
     if (oneEvent) {
       await dataStorage.updateCurrentEvent(event, oneEvent.id);
-      closePopper();
+      closePopper(false);
       triggerUpdate();
     }
   };
@@ -125,7 +125,7 @@ export const FormPopper: FC<Props> = ({
           sx={{
             cursor: 'pointer',
           }}
-          onClick={closePopper}
+          onClick={() => closePopper(false)}
         />
       </div>
 
@@ -175,6 +175,8 @@ export const FormPopper: FC<Props> = ({
               selected={date}
               onChange={(thisDate: Date) => setDate(thisDate)}
               placeholderText="pick a date"
+              todayButton="Today"
+              calendarStartDay={1}
               required
             />
           </div>

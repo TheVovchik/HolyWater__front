@@ -44,7 +44,14 @@ export const Day: FC<Props> = ({
         },
       )}
     >
-      <div className="day__header">
+      <div
+        className={cn(
+          'day__header',
+          {
+            'day__header--status-active': activeDay,
+          },
+        )}
+      >
         <div className="day__number">
           {number}
         </div>

@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import cn from 'classnames';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../store/hooks';
 import { FormPopper } from '../Control/FormPopper';
@@ -12,38 +13,53 @@ type Props = {
 };
 
 export const EventModal: FC<Props> = ({ triggerUpdate }) => {
-  const [isActive, setIsActive] = useState(false);
+  const [state, setState] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { oneEvent } = useAppSelector(store => store.oneEvent);
 
-  const closeModal = () => {
+  const toggleDrawer = (
+    open: boolean,
+  ) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event.type === 'keydown'
+        && ((event as React.KeyboardEvent).key === 'Tab'
+          || (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+
     dispatch(oneEventActions.actions.closeEvent());
+    setState(open);
+  };
+
+  const closeDrawer = (open: boolean) => {
+    dispatch(oneEventActions.actions.closeEvent());
+    setState(open);
   };
 
   useEffect(() => {
     if (oneEvent) {
-      setIsActive(true);
+      setState(true);
     } else {
-      setIsActive(false);
+      setState(false);
     }
   }, [oneEvent]);
 
   return (
-    <div className={cn(
-      'modal',
-      'event-modal',
-      { 'is-active': isActive },
-    )}
+    <Drawer
+      open={state}
+      onClose={toggleDrawer(false)}
+      sx={{ width: 320, height: 'fit-content' }}
     >
-      <div className="modal-background" />
-      <div className="modal-card event-modal__card">
-        <section className="modal-card-body event-modal__body">
-          <FormPopper
-            closePopper={closeModal}
-            triggerUpdate={triggerUpdate}
-          />
-        </section>
-      </div>
-    </div>
+      <Box
+        sx={{ width: 320, height: 'fit-content' }}
+        role="presentation"
+      >
+        <FormPopper
+          closePopper={closeDrawer}
+          triggerUpdate={triggerUpdate}
+        />
+      </Box>
+    </Drawer>
   );
 };

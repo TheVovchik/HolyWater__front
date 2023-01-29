@@ -1,13 +1,21 @@
+@import '../../styles/vars';
+
 .control {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 8px;
 
   &__data {
     display: flex;
     align-items: center;
+    gap: 6px;
+
+    color: $main;
+    font-weight: 800;
   }
 
-  &__icon-wrapper {
-    border: 1px solid lightgray;
+  &__data-name {
+    min-width: 172px;
+    text-align: center;
   }
 }

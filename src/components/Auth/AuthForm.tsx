@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { dataStorage } from '../../Storage/Storage';
 import { User } from '../../types/User';
+import { EmailPattern } from '../../utils/EmailPattern';
 
 export type Props = {
   onLogin: (user: User) => void,
@@ -45,8 +46,14 @@ export const AuthForm: React.FC<Props> = ({
   };
 
   const registerUser = async () => {
-    if (password.length < 4) {
-      setPasswordError('password must contain at least 4 symbols');
+    const isEmailValid = EmailPattern.test(email);
+
+    if (!isEmailValid) {
+      setEmailError('email not valid');
+
+      if (password.length < 4) {
+        setPasswordError('password must contain at least 4 symbols');
+      }
 
       return;
     }

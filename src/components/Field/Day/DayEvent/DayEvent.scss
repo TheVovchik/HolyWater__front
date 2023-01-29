@@ -1,15 +1,18 @@
+@import '../../../../styles/vars';
+
 .day-event {
+  padding: 3px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  background-color: rgb(223, 240, 72);
+  background-color: $mainDark;
   margin-bottom: 5px;
-  border: 1px solid darkblue;
+  border: 1px solid black;
 
   &__title {
     font-size: 12px;
-    color: black;
+    color: #fff;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
@@ -23,7 +26,7 @@
 .day-event-wrapper {
   width: 100%;
   background: none;
-	color: inherit;
+	color: #fff;
 	border: none;
 	padding: 0;
 	font: inherit;
