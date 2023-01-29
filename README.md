@@ -73,3 +73,4 @@ Server: ```render.com``` (need ~1 minutes to wake up if have no action on last 3
 - APIStorage extends and implement DataStorage methods using RESTapi as place to store data.
 - LSStorage extends and implement DataStorage methods using LocalStorage as place to store data;
 - Storage methods and places can be simply extended.
+- Start the project on your PC, change in ./src/Storage/Storage.ts in line 15 StorageType.RESTApi on StorageType.localStorage;
